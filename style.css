@@ -1,0 +1,324 @@
+/* ============================================================
+   POLICE
+============================================================ */
+@font-face {
+  font-family: "JLS Ancient";
+  src: url("assets/fonts/JAncient.ttf") format("truetype");
+}
+
+/* ============================================================
+   BOUTON RETOUR
+============================================================ */
+#btn-retour {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-family: "JLS Ancient", serif;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  z-index: 9999;
+  user-select: none;
+}
+
+/* ============================================================
+   RESET / PAGE
+============================================================ */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+}
+
+/* ============================================================
+   CONTENEUR SCÈNE
+============================================================ */
+#scene-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#scene-wrapper {
+  position: relative;
+  width: min(100vw, 100vh * (16 / 9));
+  height: min(100vh, 100vw * (9 / 16));
+  overflow: hidden;
+}
+
+#scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* IMAGE DE SCÈNE */
+#scene-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+/* ============================================================
+   TRANSITION MYST-LIKE
+============================================================ */
+#scene-image.pixel {
+  filter: blur(0px);
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    filter 0.6s ease-in-out,
+    opacity 0.6s ease-in-out,
+    transform 0.6s ease-in-out;
+}
+
+#scene-image.pixel.out {
+  filter: blur(14px);
+  opacity: 0;
+  transform: scale(1.02);
+}
+
+#scene-image.pixel.out::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("assets/images/grain.png");
+  opacity: 0.25;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.no-transition {
+  transition: none !important;
+}
+
+/* ============================================================
+   HOTSPOTS
+============================================================ */
+.hotspot {
+  position: absolute;
+  cursor: pointer;
+  z-index: 5;
+  background: rgba(255, 0, 0, 0.3); /* MODE DEBUG */
+}
+
+/* ZONES CLIQUABLES — SCENE 1 */
+#mur-gauche {
+  left: 0;
+  top: 0%;
+  width: 25.5%;
+  height: 55%;
+}
+
+#mur-haut {
+  left: 25.5%;
+  top: 0%;
+  width: 32%;
+  height: 18%;
+}
+
+#hublot {
+  left: 59.5%;
+  top: 0.5%;
+  width: 13.5%;
+  height: 21.5%;
+}
+
+#table {
+  left: 32.5%;
+  top: 30.5%;
+  width: 31%;
+  height: 27%;
+}
+
+#poubelle {
+  left: 73.5%;
+  top: 70.5%;
+  width: 18.5%;
+  height: 21.5%;
+}
+
+#sol {
+  left: 41.5%;
+  top: 65%;
+  width: 17%;
+  height: 14%;
+}
+
+/* SCENE 5 */
+#trappe-poubelle {
+  left: 41%;
+  top: 49%;
+  width: 8%;
+  height: 24%;
+}
+
+/* SCENE 1 popup poubelle */
+#texte-poubelle {
+  left: 20.5%;
+  top: 2%;
+  width: 67%;
+  height: 96%;
+}
+
+/* SCENE hublotproche */
+#texte-hublotnormal {
+  left: 20.5%;
+  top: 2%;
+  width: 54%;
+  height: 96%;
+}
+
+#hublotproche {
+  left: 34%;
+  top: 41%;
+  width: 22%;
+  height: 40%;
+}
+
+/* SCENE 3 — TON HOTSPOT DU MUR (CORRIGÉ) */
+#texte-mur {
+  left: 5%;
+  top: 4%;
+  width: 92%;
+  height: 89%;
+}
+
+/* ============================================================
+   POPUPS — STYLES GLOBAUX
+============================================================ */
+.popup {
+  position: absolute;
+  top: 80px;
+  left: 120px;
+  width: 320px;
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #555;
+  border-radius: 6px;
+  font-family: "JLS Ancient", serif;
+  z-index: 10;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup-header {
+  background: #aaa9a9;
+  padding: 8px;
+  cursor: move;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+.popup-content {
+  padding: 12px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.popup button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* GIF */
+#scene-gif {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* ============================================================
+   POPUPS — SPÉCIFIQUES
+============================================================ */
+
+#popup-poubelle {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-poubelle .popup-content {
+  font-size: 24px;
+  text-align: center;
+  font-family: Courier, monospace;
+}
+
+#popup-hublotnormal-0 {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-hublotnormal-0 .popup-content {
+  font-size: 24px;
+  text-align: center;
+  font-family: Courier, monospace;
+}
+
+#popup-hublotcasse {
+  width: 517px;
+  top: 10px;
+  left: 21px;
+}
+
+#popup-hublotcasse .popup-content {
+  font-size: 24px;
+  text-align: center;
+  font-family: Courier, monospace;
+}
+
+#popup-hublotnormal-1 {
+  width: 241px;
+  top: 329px;
+  left: 352px;
+}
+
+#popup-hublotnormal-2 {
+  width: 203px;
+  top: 6px;
+  left: 1254px;
+}
+
+#popup-hublotnormal-3 {
+  width: 614px;
+  top: 11px;
+  left: 1241px;
+}
+
+#popup-hublotnormal-4 {
+  width: 267px;
+  top: 280px;
+  left: 857px;
+}
+
+#popup-hublotnormal-5 {
+  width: 1835px;
+  top: 43px;
+  left: 21px;
+}
+
+#popup-hublotnormal-5 .popup-content {
+  font-size: 105px;
+  text-align: center;
+  font-family: Courier, monospace;
+}

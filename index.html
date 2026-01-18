@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Point & Click</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Bouton retour -->
+  <div id="btn-retour">Retour</div>
+
+  <!-- Conteneur principal -->
+  <div id="scene-container">
+    <div id="scene-wrapper">
+      <div id="scene" class="pixel no-transition">
+        <img id="scene-image" class="pixel" src="assets/images/scene1.png" alt="Scene">
+        <img id="scene-gif" src="" class="gif-transition" style="display:none;">
+
+        <!-- Hotspots (définis dans le HTML, logiques dans script.js) -->
+        <div class="hotspot nav" data-scene="scene1" data-target="scene2" id="hublot"></div>
+        <div class="hotspot nav" data-scene="scene1" data-target="scene3" id="mur-gauche"></div>
+        <div class="hotspot nav" data-scene="scene1" data-target="scene3" id="mur-haut"></div>
+        <div class="hotspot nav" data-scene="scene1" data-target="scene4" id="table"></div>
+        <div class="hotspot nav" data-scene="scene1" data-target="scene5" id="poubelle"></div>
+
+        <div class="hotspot nav" data-scene="scene5" data-target="poubelle" id="trappe-poubelle"></div>
+
+        <div class="hotspot nav" data-scene="scene2" data-target="hublotproche" id="hublotproche"></div>
+
+
+
+        <div class="hotspot popup-only" data-scene="scene1" id="sol"></div>
+        <div class="hotspot popup-only" data-scene="poubelle" id="texte-poubelle"></div>
+        <div class="hotspot popup-only" data-scene="hublotproche" id="texte-hublotnormal"></div>
+        <div class="hotspot popup-only" data-scene="scene3" id="texte-mur"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup sol -->
+  <div class="popup hidden" id="popup-sol">
+    <div class="popup-header">
+      Sol
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      c'est le sol
+    </div>
+  </div>
+
+  <!-- Popup poubelle -->
+  <div class="popup hidden" id="popup-poubelle">
+    <div class="popup-header">
+      Au fond du trou
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      C'est là que finissent les idées qui n'accrochent pas, celle qui sont trop insignifiantes ou trop folles, c'est là
+      que vont mourir les mots, couchés dans leurs cercueils de papier froissé. Un jour peut être elle vivront à
+      nouveau, libérée de cet abysse, habillées d'une nouvelle syntaxe ou d'une nouvelle encre. En attendant, elles
+      reposent ici. Le silence est assourdissant.
+    </div>
+  </div>
+
+  <!-- Popup mur -->
+
+  <div class="popup hidden" id="popup-texte-mur">
+    <div class="popup-header">
+      Le mur
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      C le mur lol
+    </div>
+  </div>
+
+  <!-- Popup hublot Normal -->
+  <div class="popup hidden" id="popup-hublotnormal-0">
+    <div class="popup-header">
+      Le vide
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      La lumière naturelle rentre par la cornée de verre, filtrée à travers des dizaines et des centaines et des
+      milliers de litre d'eau. Une vision de l'extérieur, aussi fausse et distordue que possible, mais la seul à
+      laquelle s'accrocher. Un espoir aussi fin qu'une fissure sur la surface du verre, sur laquelle il suffirait de
+      frapper pour que l'eau s'engouffre, remplissant tes poumons bien plus vite qu'elle ne remplirait la pièce, mais
+      ouvrant un passage, un unique passage vers l'extérieur et loin d'ici. Ou alors un aller simple vers un tombeau
+      aquatique. Mystère. Est-ce que tu veux insister ?
+    </div>
+  </div>
+
+  <div class="popup hidden" id="popup-hublotcasse">
+    <div class="popup-header">
+      La liberté
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      Le grand plongeon vers l'inconnu. Il ne reste qu'une voie, et c'est vers le haut. Tes poumons brûlent, tu as le
+      souffle court, mais tu dois continuer à nager. Tu as décidé de tout exploser et de partir vers l'inconnu.
+      L'histoire s'arrête ici, et c'est à toi de continuer, seul. Bonne chance.
+    </div>
+  </div>
+
+  <div class="popup hidden" id="popup-hublotnormal-1">
+    <div class="popup-header">
+      Rien ici
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      Il n'y a rien sur cette vitre
+    </div>
+  </div>
+
+  <div class="popup hidden" id="popup-hublotnormal-2">
+    <div class="popup-header">
+      Ca suffit
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      Pourquoi tu t'acharnes ?
+    </div>
+  </div>
+
+  <div class="popup hidden" id="popup-hublotnormal-3">
+    <div class="popup-header">
+      Une tâche sans fin
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      Ca ne menera à rien, tu le comprends ?
+    </div>
+  </div>
+
+  <div class="popup hidden" id="popup-hublotnormal-4">
+    <div class="popup-header">
+      Une erreur
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      Tu vas le regretter.
+    </div>
+  </div>
+
+  <div class="popup hidden" id="popup-hublotnormal-5">
+    <div class="popup-header">
+      STOP
+      <button class="close">✕</button>
+    </div>
+    <div class="popup-content">
+      ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE
+      ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTE ARRÊTEv
+    </div>
+  </div>
+
+  <!-- Chargement du moteur -->
+  <script src="engine/transitions.js"></script>
+  <script src="engine/popups.js"></script>
+  <script src="engine/hotspots.js"></script>
+  <script src="engine/navigation.js"></script>
+  <script src="engine/scenes.js"></script>
+
+  <!-- Initialisation du jeu -->
+  <script src="script.js"></script>
+
+  <audio id="bg-music" src="assets/sounds/AnythingGoes.mp3" loop></audio>
+
+</body>
+
+</html>

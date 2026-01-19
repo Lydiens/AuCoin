@@ -25,6 +25,40 @@ Scenes.addScene("tablechair", "assets/images/tablechair.png");
 Scenes.addScene("toutchair", "assets/images/toutchair.png");
 Scenes.addScene("hublotoeil", "assets/images/hublotoeil.png");
 
+
+/* ------------------------------------------------------------
+   PRÉCHARGEMENT DES IMAGES ET GIFS
+------------------------------------------------------------ */
+
+const preloadList = [
+  "assets/images/scene1.png",
+  "assets/images/scene2.png",
+  "assets/images/scene3.png",
+  "assets/images/scene4.png",
+  "assets/images/scene5.png",
+  "assets/images/poubelle.png",
+  "assets/images/hublotproche.png",
+  "assets/images/HublotProcheSansVitre.jpg",
+  "assets/images/tablepapier1.png",
+  "assets/images/tablepapier2.png",
+  "assets/images/tablepapiervide.png",
+  "assets/images/planlargemurpapier.png",
+  "assets/images/hublotrouge.png",
+  "assets/images/murchair.png",
+  "assets/images/murchairbouche.png",
+  "assets/images/tablechair.png",
+  "assets/images/toutchair.png",
+  "assets/images/hublotoeil.png",
+
+  // GIFs
+  "assets/gifs/hublotpoisson.gif"
+];
+
+preloadList.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
+
 /* -----------------------------------------
    Déclaration des relations de navigation
 ----------------------------------------- */

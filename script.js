@@ -27,38 +27,56 @@ Scenes.addScene("hublotoeil", "assets/images/hublotoeil.png");
 
 
 /* ------------------------------------------------------------
-   PRÉCHARGEMENT DES IMAGES ET GIFS
+   PRÉCHARGEMENT OPTIMISÉ (progressif, non bloquant)
 ------------------------------------------------------------ */
 
-const preloadList = [
-  "assets/images/scene1.png",
-  "assets/images/scene2.png",
-  "assets/images/scene3.png",
-  "assets/images/scene4.png",
-  "assets/images/scene5.png",
-  "assets/images/poubelle.png",
-  "assets/images/hublotproche.png",
-  "assets/images/HublotProcheSansVitre.jpg",
-  "assets/images/tablepapier1.png",
-  "assets/images/tablepapier2.png",
-  "assets/images/tablepapiervide.png",
-  "assets/images/planlargemurpapier.png",
-  "assets/images/hublotrouge.png",
-  "assets/images/murchair.png",
-  "assets/images/murchairbouche.png",
-  "assets/images/tablechair.png",
-  "assets/images/toutchair.png",
-  "assets/images/hublotoeil.png",
+function preloadImages(list) {
+  list.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+}
 
-  // GIFs
-  "assets/gifs/hublotpoisson.gif"
-];
+// 1) Scènes prioritaires (chargées immédiatement)
+preloadImages([
+  "assets/images/scene1.webp",
+  "assets/images/scene2.webp",
+  "assets/images/scene3.webp"
+]);
 
-preloadList.forEach(src => {
-  const img = new Image();
-  img.src = src;
-});
+// 2) Scènes secondaires (chargées après 300 ms)
+setTimeout(() => {
+  preloadImages([
+    "assets/images/scene4.webp",
+    "assets/images/scene5.webp",
+    "assets/images/poubelle.webp",
+    "assets/images/hublotproche.webp",
+    "assets/images/hublotcasse.webp"
+  ]);
+}, 300);
 
+// 3) Scènes profondes (chargées après 800 ms)
+setTimeout(() => {
+  preloadImages([
+    "assets/images/tablepapier1.webp",
+    "assets/images/tablepapier2.webp",
+    "assets/images/tablepapiervide.webp",
+    "assets/images/planlargemurpapier.webp",
+    "assets/images/hublotrouge.webp",
+    "assets/images/murchair.webp",
+    "assets/images/murchairbouche.webp",
+    "assets/images/tablechair.webp",
+    "assets/images/toutchair.webp",
+    "assets/images/hublotoeil.webp"
+  ]);
+}, 800);
+
+// 4) GIFs / animations (chargés en dernier)
+setTimeout(() => {
+  preloadImages([
+    "assets/gifs/hublotpoisson.gif"
+  ]);
+}, 1500);
 /* -----------------------------------------
    Déclaration des relations de navigation
 ----------------------------------------- */

@@ -515,3 +515,11 @@ body {
   text-align: center;
   font-family: Courier, monospace;
 }
+
+#scene-image {
+  transition: opacity 0.6s ease;
+}
+
+#scene-image-new {
+  pointer-events: none;
+}

@@ -38,11 +38,11 @@ const Scenes = (() => {
 
     const img = document.getElementById("scene-image");
 
-    // Transition Myst-like
-    Transitions.apply(() => {
+    // Transition Myst-like (double-buffer)
+    Transitions.apply((setNewSrc) => {
 
-      // Changer l’image pendant le fade-out
-      img.src = sceneImages[name];
+      // On transmet la nouvelle image au moteur de transition
+      setNewSrc(sceneImages[name]);
 
       // Fermer tous les popups
       document.querySelectorAll(".popup").forEach(p =>
@@ -54,7 +54,6 @@ const Scenes = (() => {
 
       // Mettre à jour le bouton retour
       Navigation.updateBackButton(name);
-
     });
   }
 

@@ -87,7 +87,7 @@ window.addEventListener("load", () => {
   ------------------------------------------------------------ */
   const autoPopups = {
     hublotcasse: "popup-hublotcasse",
-    tablepapiervide: "popup-table-vide" ,
+    tablepapiervide: "popup-table-vide",
     toutchair: "popup-tout-chair",
   };
 
@@ -143,7 +143,6 @@ window.addEventListener("load", () => {
     document.querySelectorAll(`.hotspot.popup-only[data-scene="${sceneName}"]`)
       .forEach(h => {
 
-        // Si ce hotspot appartient à une séquence, on le laisse à la séquence
         const seq = sequentialPopupConfigs.find(s => s.scene === sceneName && s.hotspotId === h.id);
         if (seq) return;
 
@@ -193,7 +192,6 @@ window.addEventListener("load", () => {
           seq.index++;
 
           if (seq.index >= seq.popups.length) {
-            // On attend un nouveau clic sur le hotspot
             hotspot.onclick = () => {
               Scenes.loadScene(seq.finalScene);
             };
@@ -207,7 +205,7 @@ window.addEventListener("load", () => {
 
 
   /* ------------------------------------------------------------
-     5) WRAP : Scenes.loadScene → GIF + popup auto
+     5) WRAP : Scenes.loadScene → GIF + popup auto + correctif fade-in
   ------------------------------------------------------------ */
 
   let autoPopupTimer = null;
@@ -222,11 +220,20 @@ window.addEventListener("load", () => {
       autoPopupTimer = null;
     }
 
-    originalLoadScene(name);
-
     const img = document.getElementById("scene-image");
     const gifEl = document.getElementById("scene-gif");
     const backBtn = document.getElementById("btn-retour");
+
+    /* Correctif : fade-in synchronisé */
+    img.style.opacity = 0;
+
+    originalLoadScene(name);
+
+    img.onload = () => {
+      requestAnimationFrame(() => {
+        img.style.opacity = 1;
+      });
+    };
 
     /* GIF */
     if (gifCfg) {

@@ -57,17 +57,19 @@ const Transitions = (() => {
           oldImg.src = newSrc;
 
           // Correction anti-flash :
-          // On attend un frame pour éviter la superposition
+          // On attend que newImg soit totalement invisible
           requestAnimationFrame(() => {
 
-            // On cache le buffer
+            // On lance le fade-out du buffer
             newImg.style.opacity = 0;
 
-            // On remet oldImg visible uniquement quand newImg est invisible
-            setTimeout(() => {
-              oldImg.style.opacity = 1;
-            }, 50);
+            // Quand newImg a fini de disparaître → on remonte oldImg
+            newImg.addEventListener("transitionend", function handler() {
+              newImg.removeEventListener("transitionend", handler);
 
+              // Maintenant seulement, oldImg redevient visible
+              oldImg.style.opacity = 1;
+            });
           });
 
         }, 600); // durée du fade-in

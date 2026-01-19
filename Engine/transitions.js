@@ -1,15 +1,17 @@
 /* ============================================================
-   TRANSITIONS MODULE (double-buffer)
-   - zéro flash
+   TRANSITIONS MODULE (double-buffer, anti-flash)
+   - zéro flash même en réseau
    - fade-out → fade-in propre
-   - compatible réseau
+   - compatible GIF, popups, hotspots
 ============================================================ */
 
 const Transitions = (() => {
 
+  // Image principale (déjà dans ton HTML)
   const oldImg = document.getElementById("scene-image");
-  const newImg = document.createElement("img");
 
+  // Nouvelle image (buffer invisible)
+  const newImg = document.createElement("img");
   newImg.id = "scene-image-new";
   newImg.className = "pixel";
   newImg.style.position = "absolute";
@@ -19,14 +21,17 @@ const Transitions = (() => {
   newImg.style.height = "100%";
   newImg.style.opacity = "0";
   newImg.style.transition = "opacity 0.6s ease";
+  newImg.style.pointerEvents = "none";
 
+  // On ajoute le buffer dans la scène
   oldImg.parentNode.appendChild(newImg);
 
   function apply(callback) {
 
+    // Désactiver les hotspots pendant la transition
     Hotspots.hideAll();
 
-    // On récupère la nouvelle image à charger
+    // Le callback doit fournir la nouvelle image
     let newSrc = null;
     callback && callback((src) => newSrc = src);
 
@@ -37,26 +42,37 @@ const Transitions = (() => {
 
     newImg.onload = () => {
 
-      // Fade-out de l'ancienne image
+      // Fade-out de l'image actuelle
       oldImg.style.opacity = 0;
 
+      // Quand le fade-out commence → fade-in du buffer
       setTimeout(() => {
 
-        // Fade-in de la nouvelle image
         newImg.style.opacity = 1;
 
+        // Quand le fade-in est terminé → swap
         setTimeout(() => {
 
-          // On remplace l'ancienne image par la nouvelle
+          // On remplace l'image principale par la nouvelle
           oldImg.src = newSrc;
-          oldImg.style.opacity = 1;
 
-          // On reset le buffer
-          newImg.style.opacity = 0;
+          // Correction anti-flash :
+          // On attend un frame pour éviter la superposition
+          requestAnimationFrame(() => {
 
-        }, 600);
+            // On cache le buffer
+            newImg.style.opacity = 0;
 
-      }, 300);
+            // On remet oldImg visible uniquement quand newImg est invisible
+            setTimeout(() => {
+              oldImg.style.opacity = 1;
+            }, 50);
+
+          });
+
+        }, 600); // durée du fade-in
+
+      }, 300); // petit délai pour laisser le fade-out commencer
     };
   }
 

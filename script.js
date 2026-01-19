@@ -77,6 +77,8 @@ setTimeout(() => {
     "assets/gifs/hublotpoisson.gif"
   ]);
 }, 1500);
+
+
 /* -----------------------------------------
    Déclaration des relations de navigation
 ----------------------------------------- */
@@ -94,6 +96,7 @@ Navigation.setParent("hublotrouge", "planlargemurpapier");
 Navigation.setParent("murchair", "planlargemurpapier");
 Navigation.setParent("tablechair", "planlargemurpapier");
 Navigation.setParent("hublotoeil", "planlargemurpapier");
+
 
 /* -----------------------------------------
    Initialisation du moteur
@@ -257,7 +260,8 @@ window.addEventListener("load", () => {
 
 
   /* ------------------------------------------------------------
-     5) WRAP : Scenes.loadScene → GIF + popup auto + correctif fade-in
+     5) WRAP : Scenes.loadScene → GIF + popup auto
+     (FADE MANUEL SUPPRIMÉ)
   ------------------------------------------------------------ */
 
   let autoPopupTimer = null;
@@ -276,16 +280,12 @@ window.addEventListener("load", () => {
     const gifEl = document.getElementById("scene-gif");
     const backBtn = document.getElementById("btn-retour");
 
-    /* Correctif : fade-in synchronisé */
-    img.style.opacity = 0;
+    /* ❌ SUPPRESSION DU FADE MANUEL QUI CAUSAIT LE FLASH
+       img.style.opacity = 0;
+       img.onload = () => { requestAnimationFrame(() => img.style.opacity = 1); };
+    */
 
     originalLoadScene(name);
-
-    img.onload = () => {
-      requestAnimationFrame(() => {
-        img.style.opacity = 1;
-      });
-    };
 
     /* GIF */
     if (gifCfg) {

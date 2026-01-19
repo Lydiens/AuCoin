@@ -14,6 +14,16 @@ Scenes.addScene("scene5", "assets/images/scene5.png");
 Scenes.addScene("poubelle", "assets/images/poubelle.png");
 Scenes.addScene("hublotproche", "assets/images/hublotproche.png");
 Scenes.addScene("hublotcasse", "assets/images/HublotProcheSansVitre.jpg");
+Scenes.addScene("tablepapier1", "assets/images/tablepapier1.png");
+Scenes.addScene("tablepapier2", "assets/images/tablepapier2.png");
+Scenes.addScene("tablepapiervide", "assets/images/tablepapiervide.png");
+Scenes.addScene("planlargemurpapier", "assets/images/planlargemurpapier.png");
+Scenes.addScene("hublotrouge", "assets/images/hublotrouge.png");
+Scenes.addScene("murchair", "assets/images/murchair.png");
+Scenes.addScene("murchairbouche", "assets/images/murchairbouche.png");
+Scenes.addScene("tablechair", "assets/images/tablechair.png");
+Scenes.addScene("toutchair", "assets/images/toutchair.png");
+Scenes.addScene("hublotoeil", "assets/images/hublotoeil.png");
 
 /* -----------------------------------------
    Déclaration des relations de navigation
@@ -25,6 +35,13 @@ Navigation.setParent("scene4", "scene1");
 Navigation.setParent("scene3", "scene1");
 Navigation.setParent("scene2", "scene1");
 Navigation.setParent("hublotproche", "scene2");
+Navigation.setParent("tablepapier1", "scene4");
+Navigation.setParent("tablepapier2", "tablepapier1");
+Navigation.setParent("tablepapiervide", "planlargemurpapier");
+Navigation.setParent("hublotrouge", "planlargemurpapier");
+Navigation.setParent("murchair", "planlargemurpapier");
+Navigation.setParent("tablechair", "planlargemurpapier");
+Navigation.setParent("hublotoeil", "planlargemurpapier");
 
 /* -----------------------------------------
    Initialisation du moteur
@@ -66,55 +83,69 @@ window.addEventListener("load", () => {
   };
 
   /* ------------------------------------------------------------
-     2) Popup automatique à l’ouverture d’une scène
+     2) Popups automatiques
   ------------------------------------------------------------ */
   const autoPopups = {
-    hublotcasse: "popup-hublotcasse"
+    hublotcasse: "popup-hublotcasse",
+    tablepapiervide: "popup-table-vide" ,
+    toutchair: "popup-tout-chair",
   };
 
   /* ------------------------------------------------------------
-     3) Popups séquentiels sur un hotspot
+     3) Popups séquentiels MULTI-SÉQUENCES
   ------------------------------------------------------------ */
-  const sequentialPopupConfig = {
-    scene: "hublotproche",
-    hotspotId: "texte-hublotnormal",
 
-    firstPopup: "popup-hublotnormal-0",
+  const sequentialPopupConfigs = [
 
-    popups: [
-      "popup-hublotnormal-1",
-      "popup-hublotnormal-2",
-      "popup-hublotnormal-3",
-      "popup-hublotnormal-4",
-      "popup-hublotnormal-5"
-    ],
+    /* --- Séquence 1 : Hublot normal --- */
+    {
+      scene: "hublotproche",
+      hotspotId: "texte-hublotnormal",
+      firstPopup: "popup-hublotnormal-0",
+      popups: [
+        "popup-hublotnormal-1",
+        "popup-hublotnormal-2",
+        "popup-hublotnormal-3",
+        "popup-hublotnormal-4",
+        "popup-hublotnormal-5"
+      ],
+      finalScene: "hublotcasse",
+      index: -1
+    },
 
-    finalScene: "hublotcasse"
-  };
+    /* --- Séquence 2 : Mur chair --- */
+    {
+      scene: "murchair",
+      hotspotId: "texte-mur-chair",
+      firstPopup: "popup-texte-mur-chair",
+      popups: [
+        "popup-mur-chair-1",
+        "popup-mur-chair-2",
+        "popup-mur-chair-3"
+      ],
+      finalScene: "murchairbouche",
+      index: -1
+    }
 
-  let popupIndex = -1;
-
+  ];
 
   /* ------------------------------------------------------------
      4) WRAP : Hotspots.activateForScene
-        → popups simples + popups séquentiels
   ------------------------------------------------------------ */
+
   const originalActivate = Hotspots.activateForScene;
 
   Hotspots.activateForScene = function (sceneName) {
 
-    // Laisser le moteur activer/afficher les hotspots
     originalActivate(sceneName);
 
-    // --- Popups simples : tous les hotspots popup-only ouvrent popup-<id> ---
+    /* --- Popups simples --- */
     document.querySelectorAll(`.hotspot.popup-only[data-scene="${sceneName}"]`)
       .forEach(h => {
 
-        // On ignore le hotspot séquentiel (géré plus bas)
-        if (sceneName === sequentialPopupConfig.scene &&
-            h.id === sequentialPopupConfig.hotspotId) {
-          return;
-        }
+        // Si ce hotspot appartient à une séquence, on le laisse à la séquence
+        const seq = sequentialPopupConfigs.find(s => s.scene === sceneName && s.hotspotId === h.id);
+        if (seq) return;
 
         h.onclick = () => {
           const popupId = "popup-" + h.id;
@@ -122,43 +153,50 @@ window.addEventListener("load", () => {
         };
       });
 
-    // --- Popups séquentiels (hublot) ---
-    if (sceneName !== sequentialPopupConfig.scene) {
-      popupIndex = -1;
+    /* --- Popups séquentiels (multi-séquences) --- */
+    const seq = sequentialPopupConfigs.find(s => s.scene === sceneName);
+
+    if (!seq) {
+      sequentialPopupConfigs.forEach(s => s.index = -1);
       return;
     }
 
-    const hotspot = document.getElementById(sequentialPopupConfig.hotspotId);
+    seq.index = -1;
+
+    const hotspot = document.getElementById(seq.hotspotId);
     if (!hotspot) return;
 
     hotspot.onclick = () => {
 
-      // Premier popup
-      if (popupIndex === -1) {
-        const popup = document.getElementById(sequentialPopupConfig.firstPopup);
+      /* Premier popup */
+      if (seq.index === -1) {
+        const popup = document.getElementById(seq.firstPopup);
         popup.classList.remove("hidden");
 
         popup.querySelector(".close").onclick = () => {
           popup.classList.add("hidden");
-          popupIndex = 0;
+          seq.index = 0;
         };
 
         return;
       }
 
-      // Popups suivants
-      if (popupIndex < sequentialPopupConfig.popups.length) {
+      /* Popups suivants */
+      if (seq.index < seq.popups.length) {
 
-        const popupId = sequentialPopupConfig.popups[popupIndex];
+        const popupId = seq.popups[seq.index];
         const popup = document.getElementById(popupId);
         popup.classList.remove("hidden");
 
         popup.querySelector(".close").onclick = () => {
           popup.classList.add("hidden");
-          popupIndex++;
+          seq.index++;
 
-          if (popupIndex >= sequentialPopupConfig.popups.length) {
-            Scenes.loadScene(sequentialPopupConfig.finalScene);
+          if (seq.index >= seq.popups.length) {
+            // On attend un nouveau clic sur le hotspot
+            hotspot.onclick = () => {
+              Scenes.loadScene(seq.finalScene);
+            };
           }
         };
 
@@ -171,10 +209,18 @@ window.addEventListener("load", () => {
   /* ------------------------------------------------------------
      5) WRAP : Scenes.loadScene → GIF + popup auto
   ------------------------------------------------------------ */
+
+  let autoPopupTimer = null;
+
   Scenes.loadScene = function (name) {
 
     const gifCfg = gifTransitions[name];
-    const popupId = autoPopups[name];
+    const popupId = autoPopups[name] || null;
+
+    if (autoPopupTimer) {
+      clearTimeout(autoPopupTimer);
+      autoPopupTimer = null;
+    }
 
     originalLoadScene(name);
 
@@ -182,19 +228,10 @@ window.addEventListener("load", () => {
     const gifEl = document.getElementById("scene-gif");
     const backBtn = document.getElementById("btn-retour");
 
-    // Correctif : popup auto après transition
-    if (popupId) {
-      setTimeout(() => {
-        const popup = document.getElementById(popupId);
-        if (popup) popup.classList.remove("hidden");
-      }, 10);
-    }
-
-    img.addEventListener("transitionend", function handler() {
-      img.removeEventListener("transitionend", handler);
-
-      // CAS 1 : scène avec GIF
-      if (gifCfg) {
+    /* GIF */
+    if (gifCfg) {
+      img.addEventListener("transitionend", function handler() {
+        img.removeEventListener("transitionend", handler);
 
         document.querySelectorAll(".hotspot").forEach(h => {
           h.dataset._disabled = "1";
@@ -218,23 +255,18 @@ window.addEventListener("load", () => {
 
           backBtn.style.display = "block";
 
-          if (popupId) {
-            const popup = document.getElementById(popupId);
-            popup.classList.remove("hidden");
-          }
-
         }, gifCfg.duration * 1000);
+      });
+    }
 
-        return;
-      }
-
-      // CAS 2 : popup auto sans GIF
-      if (popupId) {
+    /* Popup auto */
+    if (popupId) {
+      autoPopupTimer = setTimeout(() => {
         const popup = document.getElementById(popupId);
-        popup.classList.remove("hidden");
-      }
-
-    });
+        if (popup) popup.classList.remove("hidden");
+        autoPopupTimer = null;
+      }, 700);
+    }
   };
 
 })();

@@ -109,7 +109,10 @@ body {
   position: absolute;
   cursor: pointer;
   z-index: 5;
-  background: rgba(255, 0, 0, 0.3); /* MODE DEBUG */
+  
+  /* MODE DEBUG
+  
+  background: rgba(255, 0, 0, 0.3); */
 }
 
 /* ZONES CLIQUABLES — SCENE 1 */
@@ -194,6 +197,83 @@ body {
   height: 89%;
 }
 
+#hublot-oeil {
+  left: 25%;
+  top: 4%;
+  width: 52%;
+  height: 89%;
+}
+
+#texte-mur-chair {
+  left: 5%;
+  top: 4%;
+  width: 92%;
+  height: 89%;
+}
+
+#textebouche {
+  left: 5%;
+  top: 4%;
+  width: 92%;
+  height: 89%;
+}
+
+#texteoeil {
+  left: 32%;
+  top: 19%;
+  width: 38%;
+  height: 66%;
+}
+
+#toutchair {
+  left: 32%;
+  top: 19%;
+  width: 38%;
+  height: 66%;
+}
+
+#murchairbouche {
+  left: 5%;
+  top: 4%;
+  width: 92%;
+  height: 89%;
+}
+
+#papier1 {
+  left: 26%;
+  top: 14%;
+  width: 42%;
+  height: 71%;
+}
+
+#papier2 {
+  left: 26%;
+  top: 14%;
+  width: 42%;
+  height: 71%;
+}
+
+#tablepapier1 {
+  left: 25%;
+  top: 27%;
+  width: 53%;
+  height: 62%;
+}
+
+#tablepapier2 {
+  left: 70%;
+  top: 4%;
+  width: 27%;
+  height: 89%;
+}
+
+#tablepapiervide {
+  left: 70%;
+  top: 4%;
+  width: 29%;
+  height: 89%;
+}
+
 /* ============================================================
    POPUPS — STYLES GLOBAUX
 ============================================================ */
@@ -225,8 +305,10 @@ body {
 
 .popup-content {
   padding: 12px;
-  font-size: 18px;
   line-height: 1.4;
+  font-size: 24px;
+  text-align: center;
+  font-family: Courier, monospace;
 }
 
 .popup button {
@@ -257,11 +339,79 @@ body {
   left: 713px;
 }
 
+#popup-papier1 {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-texteoeil {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-papier1 .popup-content {
+  font-size: 12px;
+  text-align: center;
+  font-family: Courier, monospace;
+}
+
+#popup-papier2 {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-papier2 .popup-content {
+  font-size: 12px;
+  text-align: center;
+  font-family: Courier, monospace;
+  white-space: pre-line;
+}
+
 #popup-poubelle .popup-content {
   font-size: 24px;
   text-align: center;
   font-family: Courier, monospace;
 }
+
+#popup-texte-mur {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-texte-mur-chair {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-mur-chair-1 {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-mur-chair-2 {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-mur-chair-1 {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
+#popup-mur-chair-3 {
+  width: 517px;
+  top: 112px;
+  left: 713px;
+}
+
 
 #popup-hublotnormal-0 {
   width: 517px;
@@ -281,6 +431,24 @@ body {
   left: 21px;
 }
 
+#popup-table-vide {
+  width: 925px;
+  top: 75px;
+  left: 465px;
+}
+
+#popup-tout-chair {
+  width: 925px;
+  top: 75px;
+  left: 465px;
+}
+
+#popup-table-vide .popup-content {
+  font-size: 15px;
+  text-align: center;
+  font-family: Courier, monospace;
+}
+
 #popup-hublotcasse .popup-content {
   font-size: 24px;
   text-align: center;
@@ -293,10 +461,23 @@ body {
   left: 352px;
 }
 
+#popup-hublotnormal-1 .popup-content {
+  font-size: 24px;
+  text-align: center;
+  font-family: Courier, monospace;
+}
+
 #popup-hublotnormal-2 {
   width: 203px;
   top: 6px;
   left: 1254px;
+}
+
+
+#popup-hublotnormal-2 .popup-content {
+  font-size: 24px;
+  text-align: center;
+  font-family: Courier, monospace;
 }
 
 #popup-hublotnormal-3 {
@@ -305,10 +486,22 @@ body {
   left: 1241px;
 }
 
+#popup-hublotnormal-3 .popup-content {
+  font-size: 24px;
+  text-align: center;
+  font-family: Courier, monospace;
+}
+
 #popup-hublotnormal-4 {
   width: 267px;
   top: 280px;
   left: 857px;
+}
+
+#popup-hublotnormal-4 .popup-content {
+  font-size: 24px;
+  text-align: center;
+  font-family: Courier, monospace;
 }
 
 #popup-hublotnormal-5 {
